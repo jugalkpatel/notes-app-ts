@@ -1,16 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+const nextEnv = require("next-env");
+const dotEnvLoad = require("dotenv-load");
 
-const nextConfig = {
-  reactStrictMode: true,
-};
+// it's going to look for .env files in your folder and grab every environment variable present there and
+// inject into the enviroment
+dotEnvLoad();
 
-module.exports = (phase, { defaultConfig }) => {
-  if (phase === PHASE_DEVELOPMENT_SERVER) {
-    console.log("i'm in development mode");
-
-    return defaultConfig;
-  }
-  return defaultConfig;
-};
+const withNextEnv = nextEnv();
+module.exports = withNextEnv();
