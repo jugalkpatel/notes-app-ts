@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 const CatchAll: NextPage = () => {
   const router = useRouter();
-  const params = router.query.params || [];
+  const params = router.query.params || []; 
   console.log({ params });
   return <div>notes catch all route</div>;
 };

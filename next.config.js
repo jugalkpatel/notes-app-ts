@@ -1,6 +1,16 @@
 /** @type {import('next').NextConfig} */
+
+const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+
 const nextConfig = {
   reactStrictMode: true,
-}
+};
 
-module.exports = nextConfig
+module.exports = (phase, { defaultConfig }) => {
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    console.log("i'm in development mode");
+
+    return defaultConfig;
+  }
+  return defaultConfig;
+};
