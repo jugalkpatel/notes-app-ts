@@ -1,14 +1,29 @@
-import type { NextPage, NextPageContext } from "next";
+import type {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+  NextPageContext,
+} from "next";
 
-const Notes: NextPage = () => {
-  return <div>notes index route</div>;
+export type Data = {
+  userId: number;
+  id: number;
+  title: string;
+  completed: false;
 };
 
-export async function getStaticProps(context: NextPageContext) {
-  console.log({ context });
-  return {
-    props: {},
-  };
-}
+export const getServerSideProps = async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+  const data: Data = await response.json();
+
+  return { props: { data } };
+};
+
+const Notes = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  console.log({ data });
+  return <div>notes index route</div>;
+};
 
 export default Notes;
