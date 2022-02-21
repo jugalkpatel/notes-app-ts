@@ -1,4 +1,10 @@
 import type { GetStaticProps, NextPage, InferGetStaticPropsType } from "next";
+import dynamic from "next/dynamic";
+
+const ThisOnlyWorksOnBrowser = dynamic(
+  () => import("../components/ThisOnlyWorksOnBrowser"),
+  { ssr: false }
+);
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/albums");
@@ -15,6 +21,7 @@ const Home: NextPage = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <div>
+      <ThisOnlyWorksOnBrowser />
       <pre>
         <code>{JSON.stringify(data, null, 2)}</code>
       </pre>
