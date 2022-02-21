@@ -1,29 +1,27 @@
-import type {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-  NextPageContext,
-} from "next";
+import Link from "next/link";
 
-export type Data = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: false;
-};
-
-export const getServerSideProps = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/todos/1");
-  const data: Data = await response.json();
-
-  return { props: { data } };
-};
-
-const Notes = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  console.log({ data });
-  return <div>notes index route</div>;
+const Notes = () => {
+  const notes = new Array(15).fill(1).map((_, index) => index);
+  console.log({ notes });
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        padding: "1rem",
+        margin: "1rem",
+        border: "1px solid black",
+      }}
+    >
+      {notes.map((number, index) => {
+        return (
+          <Link key={number} href={`/notes/${number}`}>
+            <a>to note {number}</a>
+          </Link>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Notes;
